@@ -15,7 +15,7 @@ char *readLine(const char *invite, int *strSize)
     int sLength = READLINE_BUFFER;
     char ch, *str = (char *)malloc(sLength * sizeof(char));
     int nChar = 0;
-    printf("%s:\n", invite);
+    puts(invite);
     while ((ch = getchar()) != '\n')
     {
         str[nChar] = ch;
