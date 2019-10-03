@@ -12,5 +12,5 @@ mpicc -o main main.c
 запустил командой
 
 ```
-mpirun -np 4 main
+mpirun -np 4 ./main
 ```
