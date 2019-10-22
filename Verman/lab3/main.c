@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "mpich/mpi.h"
 
 
@@ -12,9 +13,11 @@ int main(int argc, char * argv[])
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-    int i;
+    int i, j;
     char * name;
     char a = 'a';
+
+    srand(time(0));
 
     for (i = 1; i < argc; i++)
     {
@@ -31,8 +34,10 @@ int main(int argc, char * argv[])
     int name_size = (int)strlen(name);
 
     int result, part = 0;
-    for (i = rank; i < name_size; i += size)
-        part += (int)(name[i] - a);
+    for (i = rank; i < name_size; i += size){
+        for (j = 0; j < (int)(name[i] - a); j++)
+            part += rand() % name_size;
+    }
     MPI_Reduce(&part, &result, 1, MPI_INT, MPI_SUM, root, MPI_COMM_WORLD);
 
     if (rank == root) printf("sum = %d\n", result);
