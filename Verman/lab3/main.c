@@ -17,6 +17,7 @@ int main(int argc, char * argv[])
     char * name;
     char a = 'a';
 
+    clock_t start = clock();
     srand(time(0));
 
     for (i = 1; i < argc; i++)
@@ -36,12 +37,17 @@ int main(int argc, char * argv[])
     int result, part = 0;
     for (i = rank; i < name_size; i += size){
         for (j = 0; j < (int)(name[i] - a); j++)
-            part += rand() % name_size;
+            part += rand() % 9;
+        
+        printf("Process #%d: letter %c, sum = %d\n", rank, name[i], part);
     }
     MPI_Reduce(&part, &result, 1, MPI_INT, MPI_SUM, root, MPI_COMM_WORLD);
 
-    if (rank == root) printf("sum = %d\n", result);
-
+    if (rank == root)
+    {
+        printf("sum = %d\n", result);
+        printf("Total time: %ld mcs\n", (clock() - start));
+    }
     MPI_Finalize();
     return 0;
 }
