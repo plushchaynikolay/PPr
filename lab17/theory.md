@@ -30,3 +30,13 @@
 - тег (уникальный идентификатор) сообщения
 - номер коммуникатора
 - (дескриптор завершения процесса приема/передачи)
+
+## Ссылки:
+- *Как запустить MPI на нескольких кластерах через TCP:* https://habr.com/ru/company/intel/blog/251357/
+- *Какие ещё сетевые протоколы поддерживаются?*
+UDP/Mulicast не поддерживаются.
+TCP — лишь один из поддерживаемых видов транспорта, причем не основной.
+К основным относятся специфичные для [Infiniband](https://ru.wikipedia.org/wiki/InfiniBand) программно-аппаратные интерфейсы и протоколы, например, DAPL (Direct Access Programming Library).
+В частности в DAPL есть режим [UD (User Datagram)](https://software.intel.com/en-us/articles/dapl-ud-support-in-intel-mpi-library), который похож по концепции на UDP.
+Полный список поддерживаемых интерфейсов транспорта доступен в [Intel® MPI Library Reference Manual (на англ.)](https://software.intel.com/en-us/node/528820).
+- Документация по MPI: https://www.mpi-forum.org/docs/mpi-3.0/mpi30-report.pdf
