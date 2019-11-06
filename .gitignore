@@ -2,3 +2,4 @@
 *.code-workspace
 test_debuger
 main
+.ipynb_checkpoints/
