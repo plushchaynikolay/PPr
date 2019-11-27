@@ -20,7 +20,8 @@ int main(int argc, char * argv[]){
     } else {
         MPI_Recv(&recieved, 1, MPI_INT, (rank-1)%size, (rank-1)%size, MPI_COMM_WORLD, &status);
         printf("[%d] recieved: %d\n", rank, recieved);
-        MPI_Send(&rank, 1, MPI_INT, (rank+1)%size, rank, MPI_COMM_WORLD);
+        recieved = recieved + 1;
+        MPI_Send(&recieved, 1, MPI_INT, (rank+1)%size, rank, MPI_COMM_WORLD);
 
     }
 
