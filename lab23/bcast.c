@@ -1,21 +1,17 @@
 #include <stdio.h>
-#include "mpich/mpi.h"
 #include <stdlib.h>
+#include <string.h>
+#include "mpich/mpi.h"
 
 #define CH_IN_ABC 26
-#define READLINE_BUFFER 32
 
 
 // Чтение строки произвольного размера:
-// invite - текст приглашения ко вводу
-// strSize - ссылка в которую передается размер прочитанной строки
-// return str - считанный массив символов размера strSize
-char *readLine(const char *invite, int *strSize)
+char *readLine()
 {
-    int sLength = READLINE_BUFFER;
+    int sLength = 32;
     char ch, *str = (char *)malloc(sLength * sizeof(char));
     int nChar = 0;
-    puts(invite);
     while ((ch = getchar()) != '\n')
     {
         str[nChar] = ch;
@@ -26,49 +22,30 @@ char *readLine(const char *invite, int *strSize)
             str = (char *)realloc(str, sLength * sizeof(char));
         }
     }
-    *strSize = nChar;
     str = (char *)realloc(str, (nChar + 1) * sizeof(char));
     return str;
 }
 
+// рассылка MPI_Bcast
 int main(int argc, char *argv[])
 {
     MPI_Init(&argc, &argv);
 
-    int rank;
+    int rank, size;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-
-    int size;
     MPI_Comm_size(MPI_COMM_WORLD, &size);
-
+    
     MPI_Status status;
     MPI_Request request;
 
     char *str;
     int strSize;
-    int results[CH_IN_ABC];
 
-    // // рассылка точка-точка
-    // if (rank == 0)
-    // {
-    //     str = readLine("Enter line", &strSize);
-    //     for (int i = 1; i < size; i++)
-    //     {
-    //         MPI_Isend(&strSize, 1, MPI_INT, i, i, MPI_COMM_WORLD, &request);
-    //         MPI_Isend(str, strSize, MPI_CHAR, i, i, MPI_COMM_WORLD, &request);
-    //     }
-    // }
-    // else
-    // {
-    //     MPI_Recv(&strSize, 1, MPI_INT, 0, rank, MPI_COMM_WORLD, &status);
-    //     str = (char*)malloc(strSize * sizeof(char));
-    //     MPI_Recv(str, strSize, MPI_CHAR, 0, rank, MPI_COMM_WORLD, &status);
-    // }
-
-    // рассылка MPI_Bcast
     if (rank == 0)
     {
-        str = readLine("Enter line", &strSize);
+        printf("Enter line\n");
+        str = readLine();
+        strSize = strlen(str);
         MPI_Bcast(&strSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
         MPI_Bcast(str, strSize, MPI_CHAR, 0, MPI_COMM_WORLD);
     }
