@@ -13,16 +13,10 @@ int main(int argc, char *argv[])
     MPI_Request request;
 
     int N;
-
     if (rank == root)
-    {
         scanf("%d", &N);
-        MPI_Bcast(&N, 1, MPI_INT, root, MPI_COMM_WORLD);
-    }
-    else
-    {
-        MPI_Bcast(&N, 1, MPI_INT, root, MPI_COMM_WORLD);
-    }
+
+    MPI_Bcast(&N, 1, MPI_INT, root, MPI_COMM_WORLD);
 
     double x, result, part = 0;
     for (int i = rank; i < N; i += size)
@@ -33,7 +27,7 @@ int main(int argc, char *argv[])
 
     MPI_Reduce(&part, &result, 1, MPI_DOUBLE, MPI_SUM, root, MPI_COMM_WORLD);
 
-    if (rank == root)
+    if (rank == root) 
         printf("%.15f\n", result);
 
     MPI_Finalize();
