@@ -1,24 +1,24 @@
-# SUSU, SP, KE-220, 2019
+# Курс параллельного программирования ЮУрГУ, 2020
 
-## To install Mpich
+## Установка Mpich
 
 `sudo apt install mpich`
 
-## to compile code (into directory)
+## для компиляции
 
 `mpicc -o main main.c`
 
-## to run code (into directory)
+## для запуска
 
 `mpirun -np <number_of_processes> ./main`
 
-or
+или
 
 `mpiexec -n <number_of_processes> ./main`
 
-(`-np` and `-n` are synonyms, such as `mprun` and `mpexec` are)
+(`-np` и `-n` синонимы, также как `mprun` и `mpexec`)
 
-For more, go and see [mpich-userguide](https://www.mpich.org/static/downloads/3.3.1/mpich-3.3.1-userguide.pdf) and [What is MPI](http://www.mcs.anl.gov/~balaji/permalinks/2014-06-06-argonne-mpi-basic.pptx).
+Для большего, иди и смотри [mpich-userguide](https://www.mpich.org/static/downloads/3.3.1/mpich-3.3.1-userguide.pdf) и [What is MPI](http://www.mcs.anl.gov/~balaji/permalinks/2014-06-06-argonne-mpi-basic.pptx).
 
 ## Материалы
 
